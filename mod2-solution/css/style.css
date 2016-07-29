@@ -4,9 +4,10 @@
   box-sizing: border-box;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: black;
+  font-size: 13px;
 }
 h1 {
-   font-size: 25px;
+   font-size: 30px;
    text-align: center;
    font-weight: bold;
 }
@@ -38,6 +39,7 @@ background-color: lightgray;
 #chicken,#beef,#sushi{
     border-left: 1px solid black;
     border-bottom: 1px solid black;
+    font-size: 20px;
     width: 100px;
     height: 25px;
     line-height: 25px;
