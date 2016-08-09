@@ -100,7 +100,7 @@ background-color: #6f2048;
 
 }
 
-.pseudo-link {
+a.pseudo-link {
 	position: absolute;
 	margin-top:-10px;
 }
