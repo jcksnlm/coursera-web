@@ -1,0 +1,11 @@
+<table>
+	<tbody>	
+		<tr ng-repeat="item in found.items">
+	    	<td><button class="btn btn-default" ng-click="found.onRemove({argIndex: $index})">Don't want this one!</button></td>
+	    	<td><small>({{item.short_name}})</small> <b>{{item.name}}</b> - {{item.description}}</td>
+		</li>
+	</tbody>
+</table>
+
+
+ 
