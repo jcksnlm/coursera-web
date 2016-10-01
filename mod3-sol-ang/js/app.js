@@ -31,9 +31,7 @@
 
 				promise.then(function(response) {
 					
-
 					search.items = response;
-
  					
 					if (search.items.length === 0){
 						search.nothingFound = true;
@@ -104,7 +102,7 @@
     
 	function FoundItemsDirective() {
 		var ddo = {
-			templateUrl: '/founditems.template.html',
+			templateUrl: '/founditems.html',
 			scope: {
 				items:'<',
 				onRemove: "&"
