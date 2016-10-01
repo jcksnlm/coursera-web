@@ -6,14 +6,14 @@
 	//I was in a rush.
 
 	angular.module('NarrowItDownApp',[])
-	.controller('SearchController',SearchController)
-	.service('SearchServive', SearchServive)
+	.controller('NarrowItDownController',NarrowItDownController)
+	.service('MenuSearchService', MenuSearchService)
 	.directive('foundItems', FoundItemsDirective)
 	.constant('ApiBasePath','http://davids-restaurant.herokuapp.com');
 	;
 	
-	SearchController.$inject=['SearchServive'];
-	function SearchController(SearchServive) {
+	NarrowItDownController.$inject=['MenuSearchService'];
+	function NarrowItDownController(MenuSearchService) {
 		var search = this;
 		search.items = new Array();
 		search.nothingFound = false;
@@ -24,13 +24,17 @@
 			
 			if (search.filter){
 				search.nothingFound = false;
-				promise = SearchServive.getItems(search.filter);
+			
+
+				promise = MenuSearchService.getMatchedMenuItems(search.filter);
+
 
 				promise.then(function(response) {
-					var menuItems = response.data["menu_items"];
+					
 
-					search.items = SearchServive.getMatchedMenuItems(menuItems,search.filter);
+					search.items = response;
 
+ 					
 					if (search.items.length === 0){
 						search.nothingFound = true;
 					};
@@ -44,7 +48,7 @@
 		};
 		
 		search.removeItem = function(index) {
-			SearchServive.removeItem(search.items,index);
+			search.items.splice(index,1);
 			if (search.items.length === 0 ){
 				search.nothingFound = true;
 			}
@@ -54,52 +58,46 @@
 	};
 
 
-	SearchServive.$inject = ["$http","ApiBasePath"];
-	function SearchServive($http,ApiBasePath) {
+	MenuSearchService.$inject = ["$http","ApiBasePath"];
+	function MenuSearchService($http,ApiBasePath) {
 		var service = this;
 
-		service.getItems = function(filter) {
+		service.getMatchedMenuItems = function(filter) {
 
-			var response = $http({
+			return $http({
 				method: 'GET',
 				url: (ApiBasePath + "/menu_items.json")
-			})
+			}).then(function(response){
+				var foundItems = response.data["menu_items"];
+				var matchedItems = [];
 
-			return response;
-
-		};
-
-
-		service.getMatchedMenuItems = function(data,filter) {
-	    var filteredItems = new Array();
-			
-			data.forEach(function(item){
+				foundItems.forEach(function(item){
 				
-				var desc = item.description;
+					var desc = item.description;
 
-				if (typeof desc === "string"){
-					desc = item.description.toLowerCase();
-				};
+					if (typeof desc === "string"){
+						desc = item.description.toLowerCase();
+					};
 
-				if (typeof filter === "string"){
-					filter = filter.toLowerCase();
-				};
+					if (typeof filter === "string"){
+						filter = filter.toLowerCase();
+					};
 
 
-				if (desc.indexOf(filter) !== -1) {
-					
-					filteredItems.push(item);
-				};
+					if (desc.indexOf(filter) !== -1) {
+						
+						matchedItems.push(item);
+					};
+
+				});
+				
+				return matchedItems;
 
 			});
-			
-			return filteredItems;
+
 
 		};
 
-		service.removeItem = function(items,index) {
-			items.splice(index,1);
-		};
 	};
 
 
@@ -122,8 +120,6 @@
 
 	function FoundItemsDirectiveController() {
 		var found = this;
-
-		
 	};
 
    
