@@ -1,0 +1,20 @@
+body {
+  font-size: 1.2em;
+}
+
+li[ui-sref]{
+  list-style-type: none;
+}
+
+li[ui-sref] > span:hover {
+  font-weight: bold;
+  display: inline;
+	cursor: pointer;
+  color: CornflowerBlue;
+}
+
+.loading-icon {
+	position: fixed;
+	top:5px;
+	left:5px;
+}
