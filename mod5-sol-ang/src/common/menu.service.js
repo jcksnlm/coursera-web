@@ -49,8 +49,7 @@ function MenuService($http, ApiPath, $rootScope) {
 
   service.getMenuItem = function(shortName) {
     
-    return $http.get(ApiPath + '/menu_items/' + shortName + '.json')
-    .then(function(response) {
+    return $http.get(ApiPath + '/menu_items/' + shortName + '.json').then(function(response) {
       return response.data;
     });
   };

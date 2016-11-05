@@ -6,12 +6,14 @@
       <div ng-if="MyInfoCtrl.submitted" class="user-info text-center">
         <span>{{MyInfoCtrl.user.firstName}} {{MyInfoCtrl.user.lastName}}</span><br/>
         <span>{{MyInfoCtrl.user.email}}</span><br/>
-        <span>{{MyInfoCtrl.user.phone}}</span><br ng-if="MyInfoCtrl.user.phone" />
+        <span>{{MyInfoCtrl.user.phone}}</span><br ng-if="MyInfoCtrl.user.phone" /><br />
         Your favorite dish:
         <div class="menu-item-photo">
-          <div>{{MyInfoCtrl.user.dish}}</div>
-          <img class="img-responsive" width="250" height="150" ng-src="{{MyInfoCtrl.basePath}}/images/{{MyInfoCtrl.user.dish}}.jpg" alt="{{MyInfoCtrl.user.dish}}">
+          <div>{{MyInfoCtrl.menuItem.short_name}}</div>
+          <img class="img-responsive" width="250" height="150" ng-src="{{MyInfoCtrl.basePath}}/images/{{MyInfoCtrl.menuItem.short_name}}.jpg" alt="{{MyInfoCtrl.menuItem.short_name}}">
         </div>
+        <h3 class="menu-item-title">{{MyInfoCtrl.menuItem.name}}</h3>
+        <p class="menu-item-details">{{MyInfoCtrl.menuItem.description}}</p>
       </div>
       
     </fieldset>

@@ -60,6 +60,14 @@ function routeConfig ($stateProvider) {
       resolve: {
         userInfo: ['MenuService', function (MenuService) {
           return MenuService.loadUserInfo();
+        }],
+        menuItem: ['MenuService','$rootScope', function (MenuService,$rootScope) {
+          if ($rootScope.dish){
+            return MenuService.getMenuItem($rootScope.dish);
+          }
+          else{
+            return {};
+          }
         }]
       }
     });
