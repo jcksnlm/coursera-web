@@ -1,0 +1,19 @@
+<div class="container">
+
+<fieldset >
+      <legend>Your information</legend>
+      <div ng-if="!MyInfoCtrl.submitted" class="text-center">*Not Signed Up Yet. <a ui-sref="public.signup">Sign up Now!</a></div>
+      <div ng-if="MyInfoCtrl.submitted" class="user-info text-center">
+        <span>{{MyInfoCtrl.user.firstName}} {{MyInfoCtrl.user.lastName}}</span><br/>
+        <span>{{MyInfoCtrl.user.email}}</span><br/>
+        <span>{{MyInfoCtrl.user.phone}}</span><br ng-if="MyInfoCtrl.user.phone" />
+        Your favorite dish:
+        <div class="menu-item-photo">
+          <div>{{MyInfoCtrl.user.dish}}</div>
+          <img class="img-responsive" width="250" height="150" ng-src="{{MyInfoCtrl.basePath}}/images/{{MyInfoCtrl.user.dish}}.jpg" alt="{{MyInfoCtrl.user.dish}}">
+        </div>
+      </div>
+      
+    </fieldset>
+
+</div>

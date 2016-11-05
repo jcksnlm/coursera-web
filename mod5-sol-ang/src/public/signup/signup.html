@@ -1,0 +1,53 @@
+<div class="container">
+
+<fieldset >
+      <legend>Sign up for newsletters</legend>
+      <form ng-if="!SignupCtrl.submitted" name='regForm' novalidate>
+        
+        <input type="text" name="firstName" placeholder="First name"
+          ng-model="SignupCtrl.user.firstName"
+          required = "required">
+          <span ng-if="!SignupCtrl.user.firstName && regForm.firstName.$touched">
+            *Name required
+          </span>
+          <br>
+
+        <input type="text" name="lastName" placeholder="Last Name"
+          ng-model="SignupCtrl.user.lastName">
+          <br>
+            
+        <input type="email" name="email" placeholder="Email"
+          ng-model="SignupCtrl.user.email"
+          required = "required">
+          <span ng-if="regForm.email.$invalid && regForm.email.$touched">
+            *Invalid Email
+          </span>
+          <br>
+
+        <input type="text" name="phone" placeholder="Phone ###-###-####"
+          ng-model="SignupCtrl.user.phone"
+          pattern="\d{3}-\d{3}-\d{4}">
+          <span ng-if="regForm.phone.$invalid && regForm.phone.$touched">
+            *Invalid phone
+          </span>
+          <br>
+
+         <input type="text" name="dish" placeholder="Favorite dish no."
+          ng-model="SignupCtrl.user.dish" required>
+          <span ng-if="regForm.dish.$invalid && regForm.dish.$touched && !SignupCtrl.invalidDish">
+            *Dish Required
+          </span>
+          <span ng-if="SignupCtrl.invalidDish">
+            *Dish invalid
+          </span>
+          <br>
+
+        <button
+          ng-disabled="regForm.$invalid"
+          ng-click="SignupCtrl.submit()"
+          class="btn btn-primary">Submit</button>
+      </form>
+      <div ng-if="SignupCtrl.submitted" class="text-center">*Your information has been submitted.</div>
+    </fieldset>
+
+</div>

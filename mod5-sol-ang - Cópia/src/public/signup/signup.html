@@ -1,0 +1,59 @@
+<div class="container" ng-controller="SignupController as reg">
+
+<fieldset>
+      <legend>Sign up for newsletters</legend>
+      <form name='regForm' novalidate>
+        
+        <input type="text" name="firstName" placeholder="First name"
+          ng-model="reg.user.firstName"
+          required = "required">
+          <span ng-if="!reg.user.firstName && regForm.firstName.$touched">
+            *Name required
+          </span>
+          <br>
+
+        <input type="text" name="lastName" placeholder="Last Name"
+          ng-model="reg.user.lastName">
+          <br>
+            
+        <input type="email" name="email" placeholder="Email"
+          ng-model="reg.user.email"
+          required = "required">
+          <span ng-if="regForm.email.$invalid && regForm.email.$touched">
+            *Invalid Email
+          </span>
+          <br>
+
+        <input type="text" name="phone" placeholder="Phone ###-###-####"
+          ng-model="reg.user.phone"
+          pattern="\d{3}-\d{3}-\d{4}">
+          <span ng-if="regForm.phone.$invalid && regForm.phone.$touched">
+            *Invalid phone
+          </span>
+          <br>
+
+         <input type="text" name="dish" placeholder="Favorite dish"
+          ng-model="reg.user.dish" required>
+          <span ng-if="(regForm.dish.$invalid && regForm.dish.$touched) || invalidDish">
+            *Dish Required
+          </span>
+          <br>
+
+        <button
+          ng-disabled="regForm.$invalid"
+          ng-click="reg.submit()"
+          class="btn btn-primary">Submit</button>
+
+          <!--div style="margin-top: 10px;">
+            Form valid? {{ regForm.$valid }}
+          </div-->
+      </form>
+    </fieldset>
+
+    <!--div id="info" ng-if="reg.completed">
+      Username: {{ reg.user.username}} <br>
+      Email: {{ reg.user.email}} <br>
+      Phone: {{ reg.user.phone }}
+    </div-->
+
+</div>
