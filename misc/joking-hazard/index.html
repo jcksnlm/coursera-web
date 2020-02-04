@@ -15,7 +15,7 @@
 
    <div class="container" ng-controller="CheckerController">
        <button class="btn btn-default" ng-click="go()">go</button><br>
-       <img ng-src="{{gottenImage}}" alt="">
+       <img ng-repeat="img in gottenImage" ng-src="{{img}}" alt="">
 
    </div>
 
