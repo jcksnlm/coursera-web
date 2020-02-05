@@ -8,6 +8,7 @@ var request = require("request");
 var gottenFiles = [];
 var init = function () {
     fs.readdir('./images/', function (err, files) {
+        gottenFiles = [];
         if (err) {
             return console.log('Unable to scan directory: ' + err);
         }
@@ -35,7 +36,7 @@ function handleData(html) {
         var imageUrl = item.src;
         var imageName = getImageName(imageUrl);
         if (gottenFiles.indexOf(imageName) === -1) {
-            download(imageUrl, "./images/" + imageName, function () { });
+            download(imageUrl, "./images/" + imageName, function () { console.log('item novo encontrado'); });
         }
     }
 }
@@ -49,7 +50,7 @@ var getImageName = function (url) {
 };
 setInterval(function () {
     init();
-}, 10000);
+}, 5000);
 /*
 https.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', (resp) => {
   let data = '';

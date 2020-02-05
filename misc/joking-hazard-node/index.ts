@@ -6,8 +6,9 @@ import request = require('request');
 var gottenFiles:Array<string> = [];
 
 
-let init = () => {
+const init = () => {
     fs.readdir('./images/', (err, files) => {
+        gottenFiles = [];
         if (err) {
             return console.log('Unable to scan directory: ' + err);
         }
@@ -43,7 +44,7 @@ function handleData(html){
       let imageName = getImageName(imageUrl);
 
       if (gottenFiles.indexOf(imageName) === -1) {
-          download(imageUrl, `./images/${imageName}`, ()=>{/*console.log('Baixou')*/});
+          download(imageUrl, `./images/${imageName}`, ()=>{console.log('item novo encontrado')});
       }
     }
 }
@@ -56,11 +57,12 @@ const download = function(uri, filename, callback){
 
 const getImageName = (url) => {
     return url.match('[A-Z0-9]+\.png')[0];
-
 }
+
+
 setInterval(()=>{
     init();
-}, 10000);
+}, 5000);
 
 
 
