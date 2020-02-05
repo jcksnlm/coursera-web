@@ -17,7 +17,13 @@
   },
   "homepage": "https://github.com/jcksnlm/coursera-web#readme",
   "devDependencies": {
+    "@types/node": "^13.7.0",
+    "body-parser": "^1.19.0",
     "curl": "^0.1.4",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "h": "^1.0.0",
+    "https": "^1.0.0",
     "jquery": "^3.4.1",
     "jsdom": "^16.1.0",
     "nodemon": "^2.0.2"

@@ -3,10 +3,16 @@ import jsdom = require("jsdom");
 const url = "http://explosm.net/rcg/view/";
 import fs = require('fs');
 import request = require('request');
+import { Express } from 'express';
+import express = require('express');
+import * as bodyParser from 'body-parser';
+
 var gottenFiles:Array<string> = [];
+const PORT = 2000;
 
+const app:Express = express();
 
-const init = () => {
+const getImages = () => {
     fs.readdir('./images/', (err, files) => {
         gottenFiles = [];
         if (err) {
@@ -60,10 +66,50 @@ const getImageName = (url) => {
 }
 
 
-setInterval(()=>{
-    init();
-}, 5000);
 
+
+// Add headers
+app.use((req, res, next) => {
+   res.setHeader('Access-Control-Allow-Origin', '*');
+   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type");
+   next();
+});
+
+// Body Parser Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '51mb'}));
+
+/*--------- ENDPOINTS  ----------*/
+
+app.get('/getnextimage', (req, res) => {
+    fs.readdir('./images/', (err, files) => {
+        let imageName:string = '';
+        if (err) {
+            res.send('fail!');
+            return console.log('Unable to scan directory: ' + err);
+        }
+
+        for (let index = 0; index < files.length; index++) {
+            const file = files[index];
+            if(!file.match('^(y|n)\-')) {
+                imageName = file;
+                break;
+            }
+        }
+
+        res.send(imageName);
+
+    });
+
+});
+
+
+// setInterval(()=>{
+//     getImages();
+// }, 5000);
+
+
+const server = app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 
 /*

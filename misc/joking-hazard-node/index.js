@@ -5,8 +5,12 @@ var jsdom = require("jsdom");
 var url = "http://explosm.net/rcg/view/";
 var fs = require("fs");
 var request = require("request");
+var express = require("express");
+var bodyParser = require("body-parser");
 var gottenFiles = [];
-var init = function () {
+var PORT = 2000;
+var app = express();
+var getImages = function () {
     fs.readdir('./images/', function (err, files) {
         gottenFiles = [];
         if (err) {
@@ -48,9 +52,37 @@ var download = function (uri, filename, callback) {
 var getImageName = function (url) {
     return url.match('[A-Z0-9]+\.png')[0];
 };
-setInterval(function () {
-    init();
-}, 5000);
+// Add headers
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type");
+    next();
+});
+// Body Parser Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: '51mb' }));
+/*--------- ENDPOINTS  ----------*/
+app.get('/getnextimage', function (req, res) {
+    fs.readdir('./images/', function (err, files) {
+        var imageName = '';
+        if (err) {
+            res.send('fail!');
+            return console.log('Unable to scan directory: ' + err);
+        }
+        for (var index = 0; index < files.length; index++) {
+            var file = files[index];
+            if (!file.match('^(y|n)\-')) {
+                imageName = file;
+                break;
+            }
+        }
+        res.send(imageName);
+    });
+});
+// setInterval(()=>{
+//     getImages();
+// }, 5000);
+var server = app.listen(PORT, function () { return console.log("Listening on " + PORT); });
 /*
 https.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', (resp) => {
   let data = '';
