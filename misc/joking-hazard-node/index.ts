@@ -9,11 +9,12 @@ import * as bodyParser from 'body-parser';
 
 var gottenFiles:Array<string> = [];
 const PORT = 2000;
+const imagePath:string = './images';
 
 const app:Express = express();
 
 const getImages = () => {
-    fs.readdir('./images/', (err, files) => {
+    fs.readdir(`${imagePath}/`, (err, files) => {
         gottenFiles = [];
         if (err) {
             return console.log('Unable to scan directory: ' + err);
@@ -50,7 +51,7 @@ function handleData(html){
       let imageName = getImageName(imageUrl);
 
       if (gottenFiles.indexOf(imageName) === -1) {
-          download(imageUrl, `./images/${imageName}`, ()=>{console.log('item novo encontrado')});
+          download(imageUrl, `${imagePath}/${imageName}`, ()=>{console.log('item novo encontrado')});
       }
     }
 }
@@ -82,7 +83,7 @@ app.use(bodyParser.json({limit: '51mb'}));
 /*--------- ENDPOINTS  ----------*/
 
 app.get('/getnextimage', (req, res) => {
-    fs.readdir('./images/', (err, files) => {
+    fs.readdir(`${imagePath}/`, (err, files) => {
         let imageName:string = '';
         if (err) {
             res.send('fail!');
@@ -100,6 +101,15 @@ app.get('/getnextimage', (req, res) => {
         res.send(imageName);
 
     });
+
+});
+
+
+app.post('/classify', (req, res) => {
+    let body = req.body;
+    fs.rename(`${imagePath}/${body.imgName}`, `${imagePath}/${(body.vote ? 'y-' : 'n-')}${body.imgName}`, ()=>{});
+
+    res.send(body.vote ? 'classificou blz' : 'classificou nope');
 
 });
 

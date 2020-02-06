@@ -9,9 +9,10 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var gottenFiles = [];
 var PORT = 2000;
+var imagePath = './images';
 var app = express();
 var getImages = function () {
-    fs.readdir('./images/', function (err, files) {
+    fs.readdir(imagePath + "/", function (err, files) {
         gottenFiles = [];
         if (err) {
             return console.log('Unable to scan directory: ' + err);
@@ -40,7 +41,7 @@ function handleData(html) {
         var imageUrl = item.src;
         var imageName = getImageName(imageUrl);
         if (gottenFiles.indexOf(imageName) === -1) {
-            download(imageUrl, "./images/" + imageName, function () { console.log('item novo encontrado'); });
+            download(imageUrl, imagePath + "/" + imageName, function () { console.log('item novo encontrado'); });
         }
     }
 }
@@ -63,7 +64,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '51mb' }));
 /*--------- ENDPOINTS  ----------*/
 app.get('/getnextimage', function (req, res) {
-    fs.readdir('./images/', function (err, files) {
+    fs.readdir(imagePath + "/", function (err, files) {
         var imageName = '';
         if (err) {
             res.send('fail!');
@@ -78,6 +79,11 @@ app.get('/getnextimage', function (req, res) {
         }
         res.send(imageName);
     });
+});
+app.post('/classify', function (req, res) {
+    var body = req.body;
+    fs.rename(imagePath + "/" + body.imgName, imagePath + "/" + (body.vote ? 'y-' : 'n-') + body.imgName, function () { });
+    res.send(body.vote ? 'classificou blz' : 'classificou nope');
 });
 // setInterval(()=>{
 //     getImages();
