@@ -14,8 +14,9 @@
 <body ng-app="lunchCheckerApp">
 
    <div class="container" ng-controller="CheckerController">
-       <button class="btn btn-default" ng-click="go()">go</button><br>
-       <img ng-repeat="img in gottenImage" ng-src="{{img}}" alt="">
+       <img ng-src="./images/{{gottenImage}}" alt=""><br>
+       <button class="btn btn-default" ng-click="classifyYes()">Yes</button>
+       <button class="btn btn-default" ng-click="classifyNo()">No</button><br>
 
    </div>
 

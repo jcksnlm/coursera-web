@@ -82,6 +82,13 @@ app.use(bodyParser.json({limit: '51mb'}));
 
 /*--------- ENDPOINTS  ----------*/
 
+app.get('/getAll', (req, res) => {
+    fs.readdir(`${imagePath}/`, (err, files) => {
+        res.send(files);
+    });
+
+});
+
 app.get('/getnextimage', (req, res) => {
     fs.readdir(`${imagePath}/`, (err, files) => {
         let imageName:string = '';

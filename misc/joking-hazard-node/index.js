@@ -63,6 +63,11 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '51mb' }));
 /*--------- ENDPOINTS  ----------*/
+app.get('/getAll', function (req, res) {
+    fs.readdir(imagePath + "/", function (err, files) {
+        res.send(files);
+    });
+});
 app.get('/getnextimage', function (req, res) {
     fs.readdir(imagePath + "/", function (err, files) {
         var imageName = '';
