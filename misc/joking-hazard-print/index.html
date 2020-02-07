@@ -11,35 +11,21 @@
   </head>
 <body ng-app="lunchCheckerApp">
 
-   <div class="container" ng-controller="CheckerController">
-       <!-- <img ng-repeat="image in images" ng-src="./images/{{image}}"><br> -->
-       <page size="A4">
+   <div class="container" ng-controller="CheckerController" >
+       <div ng-if="loaded">
 
-         <div class="header"></div>
+           <page size="A4" ng-if="loaded" ng-repeat="iPage in range(pageAmt)">
+               <div class="header"></div>
+               <table class="table">
+                   <tbody>
+                       <tr ng-repeat="itr in range(3)">
+                           <td ng-repeat="itd in range(3)"><img ng-src="./images/{{images[itd+(itr*3)+(iPage*9)]}}"></td>
+                       </tr>
+                   </tbody>
+               </table>
+           </page>
 
-         <table class="table">
-           <tbody>
-             <tr>
-               <td><img ng-src="./images/{{images[0]}}"></td>
-               <td><img ng-src="./images/{{images[0]}}"></td>
-               <td><img ng-src="./images/{{images[0]}}"></td>
-             </tr>
-             <tr>
-               <td><img ng-src="./images/{{images[0]}}"></td>
-               <td><img ng-src="./images/{{images[0]}}"></td>
-               <td><img ng-src="./images/{{images[0]}}"></td>
-             </tr>
-             <tr>
-               <td><img ng-src="./images/{{images[0]}}"></td>
-               <td><img ng-src="./images/{{images[0]}}"></td>
-               <td><img ng-src="./images/{{images[0]}}"></td>
-             </tr>
-           </tbody>
-         </table>
-       </page>
-
-       <page size="A4">
-       </page>
+       </div>
 
    </div>
 

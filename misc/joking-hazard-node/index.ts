@@ -89,6 +89,16 @@ app.get('/getAll', (req, res) => {
 
 });
 
+app.get('/getYesImages', (req, res) => {
+    fs.readdir(`${imagePath}/`, (err, files) => {
+        files = files.filter((file) => {
+            return file.match('^y\-');
+        });
+        res.send(files);
+    });
+
+});
+
 app.get('/getnextimage', (req, res) => {
     fs.readdir(`${imagePath}/`, (err, files) => {
         let imageName:string = '';

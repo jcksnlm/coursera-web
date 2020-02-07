@@ -10,12 +10,18 @@
 	function CheckerController($scope, $http) {
 
         $scope.images = [];
+        $scope.pageAmt;
 
 		$scope.go = function(){
-            $http.get('http://localhost:2000/getAll').then(function (response) {
-                $scope.images = response.data.slice(1,20);
+            $http.get('http://localhost:2000/getYesImages').then(function (response) {
+                $scope.images = response.data;
+                $scope.pageAmt = Math.ceil($scope.images.length / 9);
+                $scope.loaded = true;
             });
 		};
+        $scope.range = function(n) {
+            return Array.from(Array(n).keys());
+        };
 
 
         (function() {

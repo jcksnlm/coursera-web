@@ -68,6 +68,14 @@ app.get('/getAll', function (req, res) {
         res.send(files);
     });
 });
+app.get('/getYesImages', function (req, res) {
+    fs.readdir(imagePath + "/", function (err, files) {
+        files = files.filter(function (file) {
+            return file.match('^y\-');
+        });
+        res.send(files);
+    });
+});
 app.get('/getnextimage', function (req, res) {
     fs.readdir(imagePath + "/", function (err, files) {
         var imageName = '';
