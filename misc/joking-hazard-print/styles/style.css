@@ -34,7 +34,7 @@ table {
   margin: auto;
 }
 tr {
-    height: 80mm;
+    height: 90mm;
 }
 td {
   width: 55.5mm;
@@ -43,7 +43,7 @@ td {
 }
 
 td img {
-    height: 76mm;
+    height: 86mm;
     width: 51.5mm;
     vertical-align: center;
 	display: block;
